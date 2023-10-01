@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import { randomUUID } from 'node:crypto'
 import { z } from 'zod'
 import { knex } from '../database'
-import { randomUUID } from 'node:crypto'
 import { requestParamsSchema, validadeId } from '../middleware/validadeId'
 
 const createTasksSchema = z.object({
@@ -31,13 +31,21 @@ const requestBodySchema = z.object({
  * @returns
  */
 async function getAllTasks(req: FastifyRequest, reply: FastifyReply) {
-  const tasks = await knex.select('').from('tasks')
+  const tasks = await knex('tasks').select('').orderBy('completed', 'desc')
+  const summary = await knex('tasks')
+    .count('', { as: 'completed' })
+    .where({
+      completed: true,
+    })
+    .first()
 
   if (!Array.isArray(tasks)) {
     return reply.status(500)
   }
 
   return {
+    all: tasks.length,
+    completed: summary?.completed ?? 0,
     tasks,
   }
 }
@@ -214,7 +222,7 @@ async function concludeTask(req: FastifyRequest, reply: FastifyReply) {
     return reply.status(200).send({
       tasks: updatedTask,
     })
-  } catch (error) {
+  } catch (error: any) {
     if (error.errors[0].code === 'invalid_type') {
       return reply
         .status(422)
