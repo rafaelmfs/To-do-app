@@ -2,8 +2,8 @@ import { Text, View } from 'react-native'
 import { styles } from './style'
 
 interface TasksSummaryProps {
-  created?: number
-  concluded?: number
+  created: number
+  concluded: number
 }
 
 export function TasksSummary({

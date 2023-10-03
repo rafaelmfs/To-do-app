@@ -1,6 +1,7 @@
-import fastify from 'fastify'
-import { tasksRoutes } from './routes/tasks'
 import cors from '@fastify/cors'
+import fastify from 'fastify'
+import { env } from './env'
+import { tasksRoutes } from './routes/tasks'
 
 const app = fastify({ logger: true })
 
@@ -11,6 +12,6 @@ app.register(tasksRoutes, {
 })
 
 app.listen({
-  port: 3333,
-  host: '192.168.18.100',
+  port: env.PORT,
+  host: env.HOST,
 })

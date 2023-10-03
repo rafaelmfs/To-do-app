@@ -1,12 +1,29 @@
+import { useEffect, useState } from 'react'
 import { TextInput, TouchableOpacity, View } from 'react-native'
+import { Task } from '../../@types/Tasks'
 import { Plus } from '../../assets/icons/Plus'
 import { Header } from '../../components/Header'
 import { TasksList } from '../../components/TasksList'
 import { TasksSummary } from '../../components/TasksSummary'
+import { getAllTasks } from '../../restApi/tasks'
 import { theme } from '../../styles/theme'
 import { styles } from './style'
 
 export function Home() {
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [concludeCount, setConcludeCount] = useState<number>(0)
+
+  async function loadAllTasks() {
+    const tasks = await getAllTasks()
+
+    setTasks(tasks.tasks)
+    setConcludeCount(tasks.completed)
+  }
+
+  useEffect(() => {
+    loadAllTasks()
+  }, [])
+
   return (
     <View style={styles.container}>
       <Header />
@@ -24,8 +41,8 @@ export function Home() {
           </TouchableOpacity>
         </View>
         <View style={styles.tasksArea}>
-          <TasksSummary />
-          <TasksList />
+          <TasksSummary created={tasks.length} concluded={concludeCount} />
+          <TasksList tasks={tasks} />
         </View>
       </View>
     </View>

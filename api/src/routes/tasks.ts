@@ -162,7 +162,7 @@ async function updateTask(req: FastifyRequest, reply: FastifyReply) {
       .returning('*')
 
     return reply.status(200).send({
-      tasks: updatedTask,
+      task: updatedTask[0],
     })
   } catch (error) {
     console.error(error)
@@ -220,7 +220,7 @@ async function concludeTask(req: FastifyRequest, reply: FastifyReply) {
       .returning('*')
 
     return reply.status(200).send({
-      tasks: updatedTask,
+      task: updatedTask[0],
     })
   } catch (error: any) {
     if (error.errors[0].code === 'invalid_type') {
@@ -268,6 +268,7 @@ async function deleteTask(req: FastifyRequest, reply: FastifyReply) {
     return reply.status(500)
   }
 }
+
 export async function tasksRoutes(app: FastifyInstance) {
   // ****GET
   app.get('/', getAllTasks)
