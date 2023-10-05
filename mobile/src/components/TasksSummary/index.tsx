@@ -1,15 +1,10 @@
 import { Text, View } from 'react-native'
+import { useTasksContext } from '../../context/Tasks'
 import { styles } from './style'
 
-interface TasksSummaryProps {
-  created: number
-  concluded: number
-}
+export function TasksSummary() {
+  const { concludedCount, createdCount } = useTasksContext()
 
-export function TasksSummary({
-  created = 0,
-  concluded = 0,
-}: TasksSummaryProps) {
   return (
     <View style={styles.container}>
       <View style={styles.summaryItem}>
@@ -21,7 +16,7 @@ export function TasksSummary({
         >
           Criadas
         </Text>
-        <Text style={styles.countText}>{created}</Text>
+        <Text style={styles.countText}>{createdCount}</Text>
       </View>
 
       <View style={styles.summaryItem}>
@@ -33,7 +28,7 @@ export function TasksSummary({
         >
           Concluidas
         </Text>
-        <Text style={styles.countText}>{concluded}</Text>
+        <Text style={styles.countText}>{concludedCount}</Text>
       </View>
     </View>
   )

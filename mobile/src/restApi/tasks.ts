@@ -35,20 +35,30 @@ export async function createTask(data: CreateTaskParams) {
 
 export async function updateTask(data: UpdateTaskParams, id: string) {
   try {
-    const response = await api.put(`/task/${id}`, data)
+    const response = await api.put(`/tasks/${id}`, data)
 
-    return response.data.tasks
+    return response.data.task
   } catch (error) {
     console.error(error)
   }
 }
 
-export async function makeConcludeTasks(id: string, concluded: boolean) {
+export async function makeConcludedTasks(id: string, concluded: boolean) {
   try {
-    const response = await api.patch(`tasks/conclude/${id}`, { concluded })
+    const response = await api.patch(`tasks/conclude/${id}`, {
+      concluded: concluded ? 1 : 0,
+    })
 
-    return response.data.tasks
+    return response.data.task
   } catch (error) {
     console.error(error)
+  }
+}
+
+export async function deleteTask(id: string) {
+  try {
+    await api.delete(`/tasks/${id}`)
+  } catch (error) {
+    console.log(JSON.stringify(error))
   }
 }

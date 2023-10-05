@@ -1,19 +1,18 @@
 import { FlatList } from 'react-native'
-import { Task } from '../../@types/Tasks'
+import { useTasksContext } from '../../context/Tasks'
 import { TaskItem } from '../TaskItem'
 import { styles } from './style'
 
-interface TaskListProps {
-  tasks: Task[]
-}
+export function TasksList() {
+  const { tasks } = useTasksContext()
 
-export function TasksList({ tasks }: TaskListProps) {
   return (
     <FlatList
       style={styles.container}
       data={tasks}
       renderItem={({ item }) => (
         <TaskItem
+          id={item.id}
           title={item.name}
           description={item.description}
           completed={!!item.completed}

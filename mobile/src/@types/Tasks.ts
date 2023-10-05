@@ -7,6 +7,4 @@ export interface Task {
 
 export type CreateTaskParams = Omit<Task, 'id' | 'completed'>
 
-export interface UpdateTaskParams extends Partial<Task> {
-  id: string
-}
+export interface UpdateTaskParams extends Omit<Partial<Task>, 'id'> {}
