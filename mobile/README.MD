@@ -12,3 +12,6 @@ Para rodar esse projeto verifique qual a endereço que está rodando o back-end,
 
 Será possível testar o app com o emulador android, no web ou então no seu próprio aparelho pelo aplicativo expo go se estiver na mesma rede que o projeto está rodando.
 
+![Screenshot do projeto](https://github.com/rafaelmfs/To-do-app/blob/master/mobile/assets/print1.jpeg)
+
+![Screenshot do projeto](https://github.com/rafaelmfs/To-do-app/blob/master/mobile/assets/print2.jpeg)
