@@ -24,13 +24,18 @@ function cutString(str: string): string {
 
 export function TaskItem({ title, description, completed, id }: TaskItemProps) {
   const [showTask, setShowTask] = useState<boolean>(false)
-  const { tasks, setTasks } = useTasksContext()
+  const { tasks, setTasks, concludedCount, setConcludedCount } =
+    useTasksContext()
 
   const displayDescription =
     description ?? 'Clique para editar e adicione uma descrição...'
 
   function handleDeleteTask() {
     deleteTask(id)
+    if (completed) {
+      setConcludedCount(concludedCount - 1)
+    }
+
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
@@ -54,7 +59,12 @@ export function TaskItem({ title, description, completed, id }: TaskItemProps) {
       (lastTask) => lastTask.id !== updatedTask.id,
     )
 
+    const currentCompletedCount = completed
+      ? concludedCount - 1
+      : concludedCount + 1
+
     setTasks([updatedTask, ...newTasksList])
+    setConcludedCount(currentCompletedCount)
   }
 
   return (

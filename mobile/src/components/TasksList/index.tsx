@@ -1,10 +1,15 @@
 import { FlatList } from 'react-native'
 import { useTasksContext } from '../../context/Tasks'
 import { TaskItem } from '../TaskItem'
+import { Empty } from './Empty'
 import { styles } from './style'
 
 export function TasksList() {
   const { tasks } = useTasksContext()
+
+  if (tasks.length === 0) {
+    return <Empty />
+  }
 
   return (
     <FlatList

@@ -46,7 +46,7 @@ export async function updateTask(data: UpdateTaskParams, id: string) {
 export async function makeConcludedTasks(id: string, concluded: boolean) {
   try {
     const response = await api.patch(`tasks/conclude/${id}`, {
-      concluded: concluded ? 1 : 0,
+      completed: concluded ? 1 : 0,
     })
 
     return response.data.task
